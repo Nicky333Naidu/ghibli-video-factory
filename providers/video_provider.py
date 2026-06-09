@@ -34,10 +34,10 @@ def compile_video(scenes, output_path):
                     pass
 
                 vf = (
-                    f"zoompan=z='min(zoom+0.0008,1.12)':d=125:"
-                    f"s=1280x720:fps=25,"
-                    f"scale=1280:720,"
-                    f"pad=1280:720:(ow-iw)/2:(oh-ih)/2"
+                    "zoompan=z='min(zoom+0.0008,1.12)':d=125:"
+                    "s=1280x720:fps=25,"
+                    "scale=1280:720,"
+                    "pad=1280:720:(ow-iw)/2:(oh-ih)/2"
                 )
 
                 _run([
@@ -51,7 +51,7 @@ def compile_video(scenes, output_path):
 
             concat_list = tmpdir / "concat.txt"
             concat_list.write_text("
-".join([f"file '{p.as_posix()}'" for p in scene_videos]))
+".join([f"file '{p.as_posix()}'" for p in scene_videos]), encoding="utf-8")
             temp_video = tmpdir / "final_no_music.mp4"
 
             _run([
@@ -60,7 +60,7 @@ def compile_video(scenes, output_path):
             ])
 
             bg_music = None
-            for candidate in ["background_music.mp3", "music.mp3", "assets/background_music.mp3"]:
+            for candidate in ["background_music.mp3", "music.mp3", "assets/background_music.mp3", "output/background_music.mp3"]:
                 if os.path.exists(candidate):
                     bg_music = candidate
                     break
