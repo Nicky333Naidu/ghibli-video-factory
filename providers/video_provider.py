@@ -50,10 +50,12 @@ def compile_video(scenes, output_path):
                 scene_videos.append(scene_mp4)
 
             concat_list = tmpdir / "concat.txt"
-            concat_list.write_text("
-".join([f"file '{p.as_posix()}'" for p in scene_videos]), encoding="utf-8")
-            temp_video = tmpdir / "final_no_music.mp4"
+            with open(concat_list, "w", encoding="utf-8") as f:
+                for scene_video in scene_videos:
+                    f.write(f"file '{scene_video.as_posix()}'
+")
 
+            temp_video = tmpdir / "final_no_music.mp4"
             _run([
                 "ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(concat_list),
                 "-c", "copy", str(temp_video)
